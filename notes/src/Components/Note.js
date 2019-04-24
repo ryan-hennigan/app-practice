@@ -28,7 +28,7 @@ class Note extends Component {
 
   render(){
     return(
-      <Card>
+      <Card color="light">
         <Row>
           <Col sm="10">
             {!this.state.edit &&
@@ -41,7 +41,7 @@ class Note extends Component {
             }
           </Col>
           <Col sm="2">
-            <Button color="danger" onClick={this.handleDelete}>Delete</Button>
+            <Button color="danger" onClick={this.handleDelete}>&times;</Button>
           </Col>
         </Row>
       </Card>
