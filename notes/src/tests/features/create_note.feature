@@ -7,4 +7,5 @@ Feature: Creating a note
     Given I open the page
     And I have 0 notes
     And I click the "Add Note" button
-    Then I have 1 notes
+    And I click the "Add Note" button
+    Then I have 2 notes

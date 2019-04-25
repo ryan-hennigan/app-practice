@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Card,CardBody,Input,Button,Row,Col} from 'reactstrap';
+import {Card,CardBody,Input,Button,Row} from 'reactstrap';
 
 class Note extends Component {
 
@@ -25,15 +25,15 @@ class Note extends Component {
 
   render(){
     return(
-      <Card className="nav-note" color="light">
+      <Card id={"id"+this.props.note.id} className="nav-note" color="light">
         <Row md="10" sm="10">
             {!this.state.edit &&
-              <CardBody onClick={this.handleClick}>{this.props.note.msg}</CardBody>
+              <CardBody id={"id"+this.props.note.id +"-msg"} onClick={this.handleClick}>{this.props.note.msg}</CardBody>
             }
             {this.state.edit &&
               <Input autoFocus type="textarea" onBlur={this.handleClick} defaultValue={this.props.note.msg} onChange={this.handleUpdate}></Input>
             }
-            <Button size="sm" color="danger" onClick={this.handleDelete}><b>&times;</b></Button>
+            <Button className="nav-close-note" size="sm" color="danger" onClick={this.handleDelete}><b>&times;</b></Button>
 
           </Row>
       </Card>
