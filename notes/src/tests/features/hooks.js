@@ -13,9 +13,6 @@ After(async () => {
     if (cookies && cookies.length > 0) {
       await scope.context.currentPage.deleteCookie(...cookies);
     }
-    await scope.context.currentPage.evaluate(() => {
-      localStorage.setItem("notes", JSON.stringify([]));
-    });
     await scope.context.currentPage.close();
     scope.context.currentPage = null;
   }

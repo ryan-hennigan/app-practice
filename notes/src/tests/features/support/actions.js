@@ -14,12 +14,18 @@ const isDebugging = () =>
       }
     : {};
 
+
+const closePage = async()=>{
+  await scope.context.currentPage.close();
+  scope.context.currentPage = null;
+}
+
 const openHomePage = async () => {
   // Launch the browser and a page while setting the viewing options.
   if (!scope.browser) scope.browser = await scope.driver.launch({
-      // headless: false,
-      // slowMo: 50,
-      // devtools: false
+      headless: false,
+      slowMo: 50,
+      devtools: false
     });
   scope.context.currentPage = await scope.browser.newPage();
   scope.context.currentPage.emulate({
@@ -35,13 +41,20 @@ const openHomePage = async () => {
   return visit;
 };
 
+const clearNotes = async()=>{
+  let page = scope.context.currentPage;
+  await page.evaluate(() => {
+    localStorage.clear();
+  });
+  page.reload();
+}
+
 const clickButton = async(button)=>{
 
   const vals = {
     "\"Add Note\"" : '.nav-add-note',
     "\"Delete Note\"" : '.nav-close-note'
   };
-
 
   let page = scope.context.currentPage;
   const buttonSelector = vals[button];
@@ -103,6 +116,26 @@ const checkNote = async (ind,msg) =>{
   expect(text).toBe(msg);
 }
 
+const checkMarkdown = async(elem, ind,msg) =>{
+  let page = scope.context.currentPage;
+  let texts = await page.evaluate(() => {
+      let data = [];
+      let elements = document.getElementsByClassName('nav-note');
+      for (var element of elements)
+          data.push(element.id);
+      return data;
+  });
+  expect(texts.length>0).toBe(true);
+
+  const noteSelector = "#"+texts[ind-1] + "-msg > "+elem;
+  await page.waitForSelector(noteSelector);
+  const vals = await page.$(noteSelector);
+  const text = await page.evaluate(vals => vals.textContent, vals);
+  // console.log(text);
+
+  expect(text).toBe(msg);
+
+}
 
 
-module.exports = { openHomePage, clickButton,checkNoteCount, editNote, checkNote };
+module.exports = { checkMarkdown, openHomePage, clickButton,checkNoteCount, editNote, checkNote,clearNotes,closePage };

@@ -3,9 +3,11 @@ Feature: Deleting a note
   As a user
   I want to be able to delete notes
 
-  Scenario: Delete note via button
+  Background:
     Given I open the page
-    And I have 0 notes
+    And I have no notes
+
+  Scenario: Delete note via button
     And I click the "Add Note" button
     And I have 1 notes
     And I click the "Delete Note" button

@@ -3,17 +3,17 @@ Feature: Editing a note
   As a user
   I want to be able to edit notes
 
-  Scenario: Edit blank note via click
+  Background:
     Given I open the page
-    And I have 0 notes
+    And I have no notes
+
+  Scenario: Edit blank note via click
     And I click the "Add Note" button
     And I have 1 notes
     When I type "new note" in note 1
     Then note 1 should say "new note"
 
   Scenario: Edit existing note via click
-    Given I open the page
-    And I have 0 notes
     And I click the "Add Note" button
     And I click the "Add Note" button
     And I have 2 notes

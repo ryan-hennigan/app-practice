@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Card,CardBody,Input,Button,Row} from 'reactstrap';
+import ReactMarkdown from 'react-markdown';
 
 class Note extends Component {
 
@@ -28,7 +29,9 @@ class Note extends Component {
       <Card id={"id"+this.props.note.id} className="nav-note" color="light">
         <Row md="10" sm="10">
             {!this.state.edit &&
-              <CardBody id={"id"+this.props.note.id +"-msg"} onClick={this.handleClick}>{this.props.note.msg}</CardBody>
+              <CardBody id={"id"+this.props.note.id +"-msg"} onClick={this.handleClick}>
+                <ReactMarkdown source={this.props.note.msg} />
+              </CardBody>
             }
             {this.state.edit &&
               <Input autoFocus type="textarea" onBlur={this.handleClick} defaultValue={this.props.note.msg} onChange={this.handleUpdate}></Input>
